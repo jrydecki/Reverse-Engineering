@@ -61,4 +61,4 @@ I installed the following software onto my reverse engineering VM:
 3. IDA Education -- used to decompile, investigate, and analyze binary and executables.
 4. Flare VM -- used to install and manage many other tools that may be useful in the reverse engineering process.
 
-After installing all of this software, I diconnected the network adapter from by VM in order to isolate the system from the network.
+After installing all of this software, I disconnected the network adapter from by VM in order to isolate the system from the network.
