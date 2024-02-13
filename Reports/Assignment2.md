@@ -70,7 +70,7 @@ rule detectKeyPass
     strings:
         $a = "KEYPASS"
         $b = "onus.pp.ua" nocase
-        $c = /keypass.*@india.com/ nocase
+        $c = "keypassdecrypt@india.com" nocase
 
     condition:
         $a and $b and $c
