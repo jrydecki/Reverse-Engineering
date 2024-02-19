@@ -41,9 +41,31 @@
 
 20. `RSI` means `Register Source Index` and `RDI` means `Register Destination Index`. Based on these meanings, `RSI` typically contains the memory address for the input, or source, data; while `RDI` indicates the memory location where the output data can be found (the destination of the output data).
 
+## Crackme in Disassemblers
+
+The Crackme open in IDA Education:
+![IDA Image](./src/3-ida.png)
+
+The Crackme open in Ghidra:
+![Ghidra Image](./src/3-ghidra.png)
+
+I found Ghidra to be more helpful to me because right away when I created a project, the option to analyze and generate code from the assembly popped up and allowed me to look at the functionality. Whereas with IDA, I took a lot longer time figuring out how to generate "Pseudocode", using their terms. I ended up having to look up videos on how to generate this code (turns out hitting F5 does it, but that wasn't clear from poking around the application), and then I needed to be connected to the internet for the cloud decompiler. Overall, it was simpler, easier, and quicker to use Ghidra for this assignment.
+
 ## Crackme Solution
 
-![IDA Image](./src/3-ida)
+I discovered the solution to this Crackme using mainly the Ghidra disassembler. I disassembled the `keyg3nme` file and first went to the main function.
+I noticed it took in some input from the user, and then compared it to a function called `validate_key`. I checked out that function and found the following disassembled code:
+![validate_key function](./src/3-validate-key.png)
+
+This code means that as long as the input modulo 1223 is equation to 0, I will have gotten the correct key and found the solution to the Crackme. Any number modulo itself is always 0, so I tested this as my key in another Linux VM. After inputting `1223` as my key, I got the following results, indicating I solved the Crackme:
+
+
+![solution](./src/3-solution.png)
+
+But, according the to code, any number divisible by 1223 would work as a key, so `2446` or `3669` would also work.
+
+
+
 
 
 
