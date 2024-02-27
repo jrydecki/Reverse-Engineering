@@ -102,12 +102,8 @@ The key for this control flow requires that:
 - (key[6] XOR key[7]) < 3. Anything XOR with itself is 0, and 0 < 3, so: 8th character = '@' (the same as 7th character) 
 - key[10] == key[12]. So the 11th character and 13th character must be the same. I decided to set it them as `A`
 - (key[8] XOR key[7]) >= 4. So, the 9th character XOR with 8th needs to be greater than or equal to 4. The character `a` satisfies this. 
-- input[8] != input[9]
+- The 9th and the 10 character cannot be the same.
 - (input[12] XOR input[8] XOR input[9]) != (input[10] < 3). So, ('A' ^ 'a' ^ n) != ( 'A' < 3 ). A value that can fill in for n could be `b`. So the 10th character is `b`. 
-
-
-(input[12] ^ input[8] ^ input[9]) != (input[10] < 3)
-( 'A'  ^ 'a' ^ n) != ( 'A' < 3 )
 
 Essentially, the key must take the form of `-A-B-C@@abA-A---`.
 ```python3
