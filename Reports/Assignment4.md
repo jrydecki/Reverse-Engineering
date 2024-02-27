@@ -45,3 +45,60 @@ Therefore, I entered the password `strawberrykiwi` into the program on a Linux V
 
 
 ## Control Flow Crackmes
+All run with the command:
+`python3 keygen-x.py | xargs ./control_flow_x $1`
+
+
+### Control Flow 1
+```python3
+#
+# A602---%-------*
+#
+key = [random.choice(string.ascii_letters) for i in range(16)]
+key[0] = 'A'
+key[1] = '6'
+key[2] = '0'
+key[3] = '2'
+key[7] = '%'
+key[15] = '*'
+key = ''.join(key)
+print(key)
+```
+
+### Control Flow 2
+```python3
+#
+# ------Y-#-A*-6--
+#
+key = [random.choice(string.ascii_letters) for i in range(16)]
+key[6] = 'Y'
+key[8] = '#'
+key[10] = 'A'
+key[11] = '*'
+key[13] = '6'
+key = ''.join(key)
+print(key)
+```
+
+### Control Flow 3
+```python3
+#
+# -A-B-C@@abA-A---
+#
+key = [random.choice(string.ascii_letters) for i in range(16)]
+key[1] = 'A'
+key[3] = 'B'
+key[5] = 'C'
+key[6] = '@'
+key[7] = '@'
+key[8] = 'a'
+key[9] = 'b'
+key[10] = 'A'
+key[12] = 'A'
+key = ''.join(key)
+print(key)
+
+```
+
+
+
