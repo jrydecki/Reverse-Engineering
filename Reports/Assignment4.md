@@ -45,11 +45,16 @@ Therefore, I entered the password `strawberrykiwi` into the program on a Linux V
 
 
 ## Control Flow Crackmes
-All run with the command:
+All the following keygens were run with the command:
 `python3 keygen-x.py | xargs ./control_flow_x $1`
+
+When describing the required key and key format, the character `-` means that any character can to into that slot in the key.
 
 
 ### Control Flow 1
+The key for this control flow requires that the first four characters are `A602`, the 8th character is `%`, and the 16th character is `*`. 
+
+Essentially, the key must take the form of `A602---%-------*`.
 ```python3
 #
 # A602---%-------*
@@ -66,6 +71,9 @@ print(key)
 ```
 
 ### Control Flow 2
+The key for this control flow requires that  
+
+Essentially, the key must take the form of `------Y-#-A*-6--`.
 ```python3
 #
 # ------Y-#-A*-6--
@@ -81,6 +89,9 @@ print(key)
 ```
 
 ### Control Flow 3
+The key for this control flow requires that  
+
+Essentially, the key must take the form of `-A-B-C@@abA-A---`.
 ```python3
 #
 # -A-B-C@@abA-A---
