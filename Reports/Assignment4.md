@@ -71,7 +71,11 @@ print(key)
 ```
 
 ### Control Flow 2
-The key for this control flow requires that  
+The key for this control flow requires that:
+- 7th character to be `Y`
+- 9th character to be [(character - 35) & 0x3f] == 0. It happens to be that `#` satifies this.
+- 11th character to be `A`
+- 14th character to be `6` 
 
 Essentially, the key must take the form of `------Y-#-A*-6--`.
 ```python3
@@ -89,7 +93,21 @@ print(key)
 ```
 
 ### Control Flow 3
-The key for this control flow requires that  
+The key for this control flow requires that: 
+- ((key[1] + key[3]) - key[5]) == key[6]. It happens to be that the following characters satisfies this requirement:
+  - 2nd character `A`
+  - 4th character `B`
+  - 6th character `C`
+  - 7th character `@` 
+- (key[6] XOR key[7]) < 3. Anything XOR with itself is 0, and 0 < 3, so: 8th character = '@' (the same as 7th character) 
+- key[10] == key[12]. So the 11th character and 13th character must be the same. I decided to set it them as `A`
+- (key[8] XOR key[7]) >= 4. So, the 9th character XOR with 8th needs to be greater than or equal to 4. The character `a` satisfies this. 
+- input[8] != input[9]
+- (input[12] XOR input[8] XOR input[9]) != (input[10] < 3). So, ('A' ^ 'a' ^ n) != ( 'A' < 3 ). A value that can fill in for n could be `b`. So the 10th character is `b`. 
+
+
+(input[12] ^ input[8] ^ input[9]) != (input[10] < 3)
+( 'A'  ^ 'a' ^ n) != ( 'A' < 3 )
 
 Essentially, the key must take the form of `-A-B-C@@abA-A---`.
 ```python3
