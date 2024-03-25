@@ -1,6 +1,6 @@
 # Assignment 6
 
-## Crackme 1 Solution ():
+## Crackme 1 Solution ([Crackme 1 Download](https://crackmes.dreamhosters.com/users/seveb/crackme05/download/crackme05.tar.gz)):
 To solve this crackme, you need to disassemble the `crackme05` linux executable file in order to pull out the serial number constraints. With this contraints you can pass a valid serial number as an argument to the program which solves it.
 
 A solution is `0VW0-C..B-B..C-0WX0`. Here is my program to generate any valid serial number:
@@ -64,77 +64,79 @@ print(''.join(key), end='')
 8. Finally, the `decraycray` function prints out the success message.
 
 
-## Crackme 2 Solution ():
-To solve this crackme, you need to ____.
+## Crackme 2 Solution ([Crackme 2 Download](https://crackmes.dreamhosters.com/users/adamziaja/crackme1/download/crackme1.tar.gz)):
+To solve this crackme, you need to input a valid username and serial (or password) pair when the given `crackme1` program is run. When a valid pair is entered, you will receive a success message. In order to determine a valid username/password pair you must disassemble the program (with Ghidra) and determine how the program manipulates the entered username to create a valid password. The manipulation and explanation of it can be found below.
 
-My solution is ____.
-```python
+My solution is the following C++ program. This program will randomly generate a username and password pair that is valid for the crackme and print them out.
+```C++
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+// Random String Function Source: https://cplusplus.com/forum/windows/88843/
+string randomString(int length){
+	char alphanum[] ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	int strLen = sizeof(alphanum) - 1;
+	srand(time(NULL));
+	string result = "";
+	for (int i = 0; i < length; i++)
+		result += alphanum[rand() % strLen];
+	return result;
+}
+
+int main() {
+
+	string username = randomString(10); 
+	int usernamelength = (username.length() - 8) * 2;
+
+	string serialstring = "";
+	string serialstring2 = "";
+	for (int i = 0; i < username.length(); i++){
+		if (i % 2 == 0)
+			username[i] = tolower(username[i]);	
+		else
+			username[i] = toupper(username[i]);
+		
+		serialstring += to_string(int(username[i]));
+	}
+
+	serialstring = serialstring.substr(usernamelength, -1);
+
+	for (int j = 0; j < 8; j++)
+		serialstring2 += serialstring[j];
+	
+	cout << "Username: " << username << endl;
+	cout << "Serial: " << serialstring2 << endl;
+}
 ```
 
 ### How I did it using Ghidra:
 1. I opened the crackme in Ghidra
 2. I found the `main` function and first noticed a while loop that asks for a username input, and will continue to ask until the input is between 8 and 12 characters.
 3. Then, the program asks for a "serial number" (which is essentially a password) and the input is stored in an `sn` variable.
-4. Next, there is a for loop that goes through each character of the username and performs the following operations:
+4. Next, there is a for-loop that goes through each character of the username and performs the following operations:
   - If current character of the username is even: change that character to lowercase.
   - If the current char of the username is odd: change that character to uppercase.
-  Then, this new string gets stored in `serialstring`.
-5. We then set `usernamelength = (serialstring - 8) * 2`
-6. Then, set `serialstring` gets set to substring `serialstring.substr(usernamelength)`.
-6. Then, `serialstring2` is populated with the first 8 characters of `serialstring`
+  Then, this new string gets stored in `serialstring`, BUT, interstingly enough the string that is stored is actually each letter's ASCII value. For example, if the first character of the username is `'a'`, the string will have `"97"` in place of `'a'`. I believe this is due to the `<<` operator called by the C++ code. It seems that this operator does some implicit conversions. It was not clear at all from the Ghidra decompiled code or assembly, and I ended up using GDB to understand the implicit conversions and create a program that can generate username/password pairs, and I'm not 100% sure which operator of line of code does this conversion but I am sure of my end generator. Please see the section below for additional details on what I did in GDB to come to these conclusions.
+5. We then set `usernamelength = (serialstring.length() - 8) * 2`. Here, the returned length of serialstring is exactly the same as the length of the original username. 
+6. Then, set `serialstring2` gets set to substring `serialstring.substr(usernamelength)`. This essentially just captures the first 8 *digits* from the string of numbers. For example, if the first four letters of the string were originally `A B C D`, `serialstring2` would now be set to `65 66 67 68` (without the spaces).
+7. Finally, this string of numbers is compared to the serial number inputted from the user (stored in `sn`), and if they are the same, the crackme is completed.
+
+### How I did it using GDB
+I ended up using GDB to inspect what values were actually being stored in the program after a good while of attempting to figure it out with only the decompiled and disassembled code from Ghidra to no avail.
+
+1. I opened the program with GDB: `gdb crackme1`.
+2. I first wanted to see what value was actually being stored in `serialstring` after the lowercase/uppercase conversions. So I put a breakpoint right after that for-loop and inspected what was stored:
+    - `b *0x401276` - Set a breakpoint after `serialstring` is populated.
+    - `run` - Run the program until the breakpoint; I entered `abcdefgh` as a username.
+    - `print serialstring` - This returned `$2 = "976699681017010372"`.
+  This means that `serialstring` was not storing just a single character for each of the username characters, but rather a string representation of the integer of the ASCII character. This was the critical point to understand to finally be able to create the keygen program for this crackme.
 
 
-abcdefghij
-serialstring = "aBcDeFgHiJ"
-usernamelength = 4
-serialstring = serialstring.substr(4) = cDeFgHiJ
-
-The correct password is the first 8 characters of serialstring
-
-
-abcdefgh
-aBcDeFgH
-HgFeDcBa
-
-
-## Crackme 3 Solutions():
-
-
-
-### How I did it using Ghidra:
-1. I opened the crackme in Ghidra
-2. I found the `entry` function (because I couldn't find a main), and then I found the function being called by `__libc_start_main`, which I then renamed `main`.
-3. I went into main and
-
-
-puVar - 8 = argv[1]
-puvar -4 = argv[2]
-puVar - 16 = argv[2]
-
-argv[2] must be length of 6.
----------
-
-puVar4 - 16 = argv[1]
-sVar2 = len(argv[1])
-
-iVar3 = return (input ^ 0x3b) & 0x3f;
-
-STRING[iVar3] must equal argv[2]
----------
-
--16 = sVar2 = len(argv[1])
--20 = argv[1]
-bVar2 = FUNC_#3( argv[1], len )
-
-STRING[bVar2] must equal argv[2] + 1
-----------
-
--16 = -12 = len(argv[1])
-
-
-
-
-## Crackme 5 Solutions():
+## Crackme 5 Solutions([Crackme 5 Download](https://crackmes.dreamhosters.com/users/seveb/crackme04/download/crackme04.tar.gz)):
 To solve this crackme, you need to patch the given `crackme04_32bit` Linux executable in order to first disable the self-destruction properties of the program that are activated if the program is not run at 13:37 or if the PID is not 1337. After patching the program, you need to disassemble it in order to pull out the correct serial-number generation algorithm (based on the PID). After you have this algorithm you must use it to generate the correct serial number, and input it into the program (that no longer self-destructs on run) to solve the crackme.
 
 My solution is the serial number: `217552398261569-545326772-1082328767-1082328760-1082328765-1082328753`. The program that I used to generate this can be found in the section below with additional context.
