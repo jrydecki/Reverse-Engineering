@@ -67,7 +67,9 @@ print(''.join(key), end='')
 ## Crackme 2 Solution ([Crackme 2 Download](https://crackmes.dreamhosters.com/users/adamziaja/crackme1/download/crackme1.tar.gz)):
 To solve this crackme, you need to input a valid username and serial (or password) pair when the given `crackme1` program is run. When a valid pair is entered, you will receive a success message. In order to determine a valid username/password pair you must disassemble the program (with Ghidra) and determine how the program manipulates the entered username to create a valid password. The manipulation and explanation of it can be found below.
 
-My solution is the following C++ program. This program will randomly generate a username and password pair that is valid for the crackme and print them out.
+My solution is the following C++ program. This program will randomly generate a username and password pair that is valid for the crackme and print them out. 
+
+One such password/serial valid pair is: `6Dv1wUkEq4`/`11849119`
 ```C++
 #include <iostream>
 #include <string>
@@ -136,7 +138,7 @@ I ended up using GDB to inspect what values were actually being stored in the pr
   This means that `serialstring` was not storing just a single character for each of the username characters, but rather a string representation of the integer of the ASCII character. This was the critical point to understand to finally be able to create the keygen program for this crackme.
 
 
-## Crackme 5 Solutions([Crackme 5 Download](https://crackmes.dreamhosters.com/users/seveb/crackme04/download/crackme04.tar.gz)):
+## Crackme 5 Solutions ([Crackme 5 Download](https://crackmes.dreamhosters.com/users/seveb/crackme04/download/crackme04.tar.gz)):
 To solve this crackme, you need to patch the given `crackme04_32bit` Linux executable in order to first disable the self-destruction properties of the program that are activated if the program is not run at 13:37 or if the PID is not 1337. After patching the program, you need to disassemble it in order to pull out the correct serial-number generation algorithm (based on the PID). After you have this algorithm you must use it to generate the correct serial number, and input it into the program (that no longer self-destructs on run) to solve the crackme.
 
 My solution is the serial number: `217552398261569-545326772-1082328767-1082328760-1082328765-1082328753`. The program that I used to generate this can be found in the section below with additional context.
