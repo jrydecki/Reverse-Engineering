@@ -69,7 +69,7 @@ To solve this crackme, you need to input a valid username and serial (or passwor
 
 My solution is the following C++ program. This program will randomly generate a username and password pair that is valid for the crackme and print them out. 
 
-One such password/serial valid pair is: `6Dv1wUkEq4`/`11849119`
+One such valid password/serial pair is: `6Dv1wUkEq4`/`11849119`
 ```C++
 #include <iostream>
 #include <string>
