@@ -2,6 +2,18 @@
 
 ## OSINT
 
+The malware we are looking at in this report is called `njRAT`, and is said to be a Remote Access Trojan. This malware is also called `Bladabindi` [1][3], and according to some sources [1][3][4], was first discovered in 2012, but according to other sources such as cynet.com[2], was first detected in 2013. This malware is largly been used by actors in the Middle East [3][4][5], and has reported been seen and used at recently as July 2023 by the "Computer Emergency Reponse Team of Ukraine" [3]. According to any.run [6], this malware was most popular and most frequently seen in 2014 in the Middle East. But, it is also refrenced as the 8th most widespread threads [1][7] even in 2023!  This malware is able to activate the remotely access the computer [3][5], webcam [1][2][3][5], log keystrokes [1][2][3][5], steal passwords from web browsers [1][2], upload/download files [1][2] and many other processes that remote access gives.
+
+
+- [1] https://www.checkpoint.com/cyber-hub/threat-prevention/what-is-malware/what-is-njrat-malware/
+- [2] https://www.cynet.com/attack-techniques-hands-on/njrat-report-bladabindi/
+- [3] https://www.splunk.com/en_us/blog/security/more-than-just-a-rat-unveiling-njrat-s-mbr-wiping-capabilities.html
+- [4] https://attack.mitre.org/software/S0385/
+- [5] https://malpedia.caad.fkie.fraunhofer.de/details/win.njrat
+- [6] https://any.run/malware-trends/njrat
+- [7] https://gridinsoft.com/backdoor/njrat
+
+
 ## RegShot
 ### Added Keys
 After running RegShot, I noticed various Regsitry Keys that were added that I found to be suspicious. Here are list of them with a bit of explanation of what they might be doing.
