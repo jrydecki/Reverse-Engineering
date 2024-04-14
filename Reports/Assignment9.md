@@ -23,8 +23,9 @@ Next, the A/V program loops through all detected njRAT files and deletes them. S
 After the process is stopped, and all these files are removed, njRAT should be removed.
 
 ## Anti-Virus Code
-- Source Code Download: [link 1](../Source/Assignment9/SourceCode.zip)
-- Executable Download: [link 2](../Source/Assignment9/Assignment9.exe)
+- Source Code Download: [SourceCode.zip](../Source/Assignment9/SourceCode.zip)
+- Source Code Folder: [https://github.com/jrydecki/Reverse-Engineering/tree/main/Source/Assignment9](https://github.com/jrydecki/Reverse-Engineering/tree/main/Source/Assignment9)
+- Executable Download: [](../Source/Assignment9/Assignment9.exe)
 
 ## Anti-Virus Demo
 ![njRAT Anti-Virus Demo](src/9-JacobRydecki-Antivirus.mp4)
